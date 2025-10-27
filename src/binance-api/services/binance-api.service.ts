@@ -35,6 +35,16 @@ export class BinanceApiService {
       },
     });
 
-    return response.data;
+    return (response.data as any[]).map<GetTradesResponse>((t: any) => {
+      return {
+        id: t.id,
+        isBestMatch: t.isBestMatch,
+        isBuyerMaker: t.isBuyerMaker,
+        price: Number(t.price),
+        qty: Number(t.qty),
+        quoteQty: Number(t.quoteQty),
+        time: t.time,
+      };
+    });
   }
 }

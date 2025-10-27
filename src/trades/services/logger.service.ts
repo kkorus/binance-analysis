@@ -5,4 +5,8 @@ export class LoggerService {
   public error(message: string, error: string): void {
     console.log(message, error);
   }
+
+  public info(message: string): void {
+    console.log(message);
+  }
 }
