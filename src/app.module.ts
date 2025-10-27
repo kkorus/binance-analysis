@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ApiModule } from './api/api.module';
-import { TradesModule } from './trades/trades.module';
 
 @Module({
   imports: [
@@ -13,7 +12,7 @@ import { TradesModule } from './trades/trades.module';
       process.env.MONGO_URI || 'mongodb://localhost:27017/app_db',
     ),
     ApiModule,
-    TradesModule,
+    // TradesModule,
   ],
 })
 export class AppModule {}

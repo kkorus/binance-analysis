@@ -4,8 +4,12 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class TradesService {
   public constructor(private readonly binanceApiService: BinanceApiService) {}
-  public async getLatestAnalyzedCryptoData(): Promise<any> {
-    const result = await this.binanceApiService.getTrades();
+
+  public async getLatestTrades(symbol: string, limit?: number): Promise<any> {
+    const result = await this.binanceApiService.getTrades({
+      symbol,
+      limit,
+    });
     return result;
   }
 }
