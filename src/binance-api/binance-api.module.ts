@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { BinanceApiService } from './binanace-api.service';
+import { BinanceApiService } from './services';
 
 @Module({
   providers: [BinanceApiService],

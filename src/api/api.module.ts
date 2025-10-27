@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
+import { TradesController } from './controllers';
+import { TradesModule } from '../trades/trades.module';
 
 @Module({
-  controllers: [],
+  imports: [TradesModule],
+  controllers: [TradesController],
 })
 export class ApiModule {}

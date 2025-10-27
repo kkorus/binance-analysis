@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
+import { TradesService } from './services/trades.service';
+import { BinanceApiModule } from '../binance-api/binance-api.module';
 
 @Module({
-  providers: [],
-  exports: [],
+  imports: [BinanceApiModule],
+  providers: [TradesService],
+  exports: [TradesService],
 })
 export class TradesModule {}

@@ -1,10 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { TradesService } from '../../trades/services/trades.service';
 
-@Controller()
+@Controller('trades/')
 export class TradesController {
-  public constructor() {}
+  public constructor(private readonly tradesService: TradesService) {}
 
+  @Get()
   public getTrades(): Promise<void> {
-    return Promise.resolve();
+    return this.tradesService.getLatestAnalyzedCryptoData();
   }
 }
