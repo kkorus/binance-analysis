@@ -59,12 +59,7 @@ describe('TradesService', () => {
         },
       ];
       when(
-        binanceApiService.getTrades(
-          deepEqual({
-            symbol,
-            limit,
-          }),
-        ),
+        binanceApiService.getTrades(deepEqual({ symbol, limit })),
       ).thenResolve(tradesResponse);
 
       // when
@@ -72,6 +67,7 @@ describe('TradesService', () => {
 
       // then
       expect(trades.length).toBe(1);
+      expect(trades[0]).toEqual(tradesResponse[0]);
     });
 
     it('should log error when getting trades fail', async () => {
@@ -79,12 +75,7 @@ describe('TradesService', () => {
       const symbol = 'TEST_SYMBOL';
       const limit = 1;
       when(
-        binanceApiService.getTrades(
-          deepEqual({
-            symbol,
-            limit,
-          }),
-        ),
+        binanceApiService.getTrades(deepEqual({ symbol, limit })),
       ).thenReject(new Error('Invalid symbol provided!'));
 
       // when

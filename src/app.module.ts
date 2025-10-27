@@ -12,7 +12,6 @@ import { ApiModule } from './api/api.module';
       process.env.MONGO_URI || 'mongodb://localhost:27017/app_db',
     ),
     ApiModule,
-    // TradesModule,
   ],
 })
 export class AppModule {}
