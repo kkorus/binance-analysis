@@ -18,7 +18,7 @@ export class TradesController {
   }
 
   // this is endpoint to demonstrate simple data analysis on trades data
-  // curl "localhost:3000/getMaxMinTradesValuesOverTime?symbol=LTCBTC&limit=2"
+  // curl "localhost:3000/trades/getMaxMinTradesValuesOverTime?symbol=LTCBTC&limit=2"
   @Get('getMaxMinTradesValuesOverTime')
   public async getMaxMinTradesValuesOverTime(
     @Query('symbol') symbol: string,

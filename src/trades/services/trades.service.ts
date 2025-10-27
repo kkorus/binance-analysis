@@ -1,5 +1,6 @@
 import { BinanceApiService } from './../../binance-api/services/binance-api.service';
 import { Injectable } from '@nestjs/common';
+import { LoggerService } from './logger.service';
 
 export class Trade {
   id: number;
@@ -13,14 +14,23 @@ export class Trade {
 
 @Injectable()
 export class TradesService {
-  public constructor(private readonly binanceApiService: BinanceApiService) {}
+  public constructor(
+    private readonly binanceApiService: BinanceApiService,
+    private readonly logger: LoggerService,
+  ) {}
 
   public async getTrades(symbol: string, limit?: number): Promise<Trade[]> {
-    const result = await this.binanceApiService.getTrades({
-      symbol,
-      limit,
-    });
-    return result;
+    try {
+      const result = await this.binanceApiService.getTrades({
+        symbol,
+        limit,
+      });
+      return result;
+    } catch (error) {
+      this.logger.error('Could not get latest trades.', error.message);
+      // either return default empty value or throw dedicated API error code
+      return [];
+    }
   }
 
   public async getMaxMinTradesValuesOverTime(
@@ -30,6 +40,7 @@ export class TradesService {
     minPriceTrade: Trade;
     maxPriceTrade: Trade;
   }> {
+    // same thing here, add try & catch + log error
     const trades = await this.getTrades(symbol, limit);
 
     const minPriceTrade = trades.sort((a: Trade, b: Trade) => {

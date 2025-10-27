@@ -1,15 +1,25 @@
+import { LoggerService } from './logger.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { BinanceApiService, GetTradesResponse } from '../../binance-api';
 import { TradesService } from './trades.service';
-import { instance, mock, when, deepEqual } from '@johanblumenberg/ts-mockito';
+import {
+  instance,
+  mock,
+  when,
+  deepEqual,
+  verify,
+  anything,
+} from '@johanblumenberg/ts-mockito';
 
 describe('TradesService', () => {
   let sut: TradesService;
   let binanceApiService: BinanceApiService;
+  let loggerService: LoggerService;
   let module: TestingModule;
 
   beforeEach(async () => {
     binanceApiService = mock(BinanceApiService);
+    loggerService = mock(LoggerService);
 
     module = await Test.createTestingModule({
       providers: [
@@ -17,6 +27,10 @@ describe('TradesService', () => {
         {
           provide: BinanceApiService,
           useValue: instance(binanceApiService),
+        },
+        {
+          provide: LoggerService,
+          useValue: instance(loggerService),
         },
       ],
     }).compile();
@@ -58,6 +72,27 @@ describe('TradesService', () => {
 
       // then
       expect(trades.length).toBe(1);
+    });
+
+    it('should log error when getting trades fail', async () => {
+      // given
+      const symbol = 'TEST_SYMBOL';
+      const limit = 1;
+      when(
+        binanceApiService.getTrades(
+          deepEqual({
+            symbol,
+            limit,
+          }),
+        ),
+      ).thenReject(new Error('Invalid symbol provided!'));
+
+      // when
+      const trades = await sut.getTrades(symbol, limit);
+
+      // then
+      expect(trades.length).toBe(0);
+      verify(loggerService.error(anything(), anything())).once();
     });
   });
 });
