@@ -1,5 +1,5 @@
-export class Trade {}
+import { TradeDto } from './trade.dto';
 
 export class GetTradesDto {
-  public data: Trade[];
+  public data: TradeDto[];
 }

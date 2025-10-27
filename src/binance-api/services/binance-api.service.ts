@@ -26,7 +26,7 @@ export class BinanceApiService {
   ): Promise<GetTradesResponse[]> {
     const { symbol, limit } = params;
     const url = '/api/v3/trades';
-    const defaultLimit = 5;
+    const defaultLimit = 500;
 
     const response = await axios.get(`${this.BASE_URL}${url}`, {
       params: {
